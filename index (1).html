@@ -1,0 +1,2456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G.B.B. – Gemiyo Kebele</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a6b3c;
+            --primary-light: #0d8c4e;
+            --primary-dark: #064a28;
+            --gold: #d4a137;
+            --gold-light: #f0d080;
+            --red: #d42a2a;
+            --bg: #f8faf7;
+            --card: #ffffff;
+            --text: #1a2e1f;
+            --text-light: #4a5f4e;
+            --shadow: 0 8px 32px rgba(10, 107, 60, 0.12);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark {
+            --bg: #0f1a12;
+            --card: #1a2a1f;
+            --text: #e8efe5;
+            --text-light: #a8c0a8;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .dark .glass {
+            background: rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .card-modern {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            transition: var(--transition);
+            border: 1px solid rgba(10, 107, 60, 0.06);
+        }
+
+        .card-modern:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(10, 107, 60, 0.18);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(10, 107, 60, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(10, 107, 60, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), #b8892a);
+            color: white;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(212, 161, 55, 0.3);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(212, 161, 55, 0.4);
+        }
+
+        .input-modern {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 2px solid rgba(10, 107, 60, 0.15);
+            background: var(--bg);
+            color: var(--text);
+            transition: var(--transition);
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .input-modern:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(10, 107, 60, 0.1);
+        }
+
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: var(--card);
+            border-right: 1px solid rgba(10, 107, 60, 0.08);
+            transition: var(--transition);
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 24px 16px;
+        }
+
+        .dark .sidebar {
+            border-right-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: var(--text-light);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: rgba(10, 107, 60, 0.08);
+            color: var(--primary);
+        }
+
+        .dark .sidebar-link:hover,
+        .dark .sidebar-link.active {
+            background: rgba(10, 107, 60, 0.2);
+        }
+
+        .sidebar-link .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .sidebar-overlay.open {
+                display: block;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(10, 107, 60, 0.12);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+            transition: width 1s ease;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: var(--card);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--primary);
+            z-index: 9999;
+            transform: translateX(120%);
+            transition: transform 0.4s ease;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .badge-status {
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-planned {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-ongoing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-completed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-verified {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        .badge-completed-donation {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .gallery-item {
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 1;
+            background: var(--card);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 48px rgba(10, 107, 60, 0.2);
+        }
+
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            font-weight: 600;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .overlay {
+            transform: translateY(0);
+        }
+
+        .forum-post {
+            border-left: 4px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            background: var(--card);
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .forum-post:hover {
+            transform: translateX(4px);
+        }
+
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-nav-toggle {
+                display: block;
+            }
+        }
+
+        .admin-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .admin-stat-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(10, 107, 60, 0.06);
+            transition: var(--transition);
+        }
+
+        .admin-stat-card .icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: flex-end;
+            height: 120px;
+            gap: 8px;
+            padding: 8px 0;
+        }
+
+        .chart-bar .bar {
+            flex: 1;
+            border-radius: 6px 6px 0 0;
+            background: linear-gradient(180deg, var(--primary), var(--primary-light));
+            min-height: 8px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .chart-bar .bar.gold {
+            background: linear-gradient(180deg, var(--gold), #b8892a);
+        }
+
+        .chart-bar .bar-label {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-top: 6px;
+        }
+
+        .pie-chart {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 0% 60%, var(--gold) 60% 85%, #3b82f6 85% 100%);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .pie-chart::after {
+            content: '';
+            position: absolute;
+            inset: 30px;
+            border-radius: 50%;
+            background: var(--bg);
+        }
+
+        /* Language switcher */
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(10, 107, 60, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .lang-btn:hover,
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Hero image */
+        .hero-image {
+            background: linear-gradient(135deg, rgba(10, 107, 60, 0.85), rgba(6, 74, 40, 0.75)),
+                url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80');
+            background-size: cover;
+            background-position: center 30%;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dark .stat-number {
+            background: linear-gradient(135deg, #0d8c4e, #f0d080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Footer */
+        .footer-social a {
+            color: var(--text-light);
+            transition: var(--transition);
+            font-size: 1.5rem;
+        }
+        .footer-social a:hover {
+            color: var(--primary);
+        }
+
+        /* QR placeholders */
+        .qr-placeholder {
+            width: 80px;
+            height: 80px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 2rem;
+            border: 2px dashed #aaa;
+        }
+        .dark .qr-placeholder {
+            background: #2a3a2f;
+            border-color: #5a7a5f;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================== TOAST ======================== -->
+    <div id="toast" class="toast">
+        <p id="toastMessage" class="font-medium"></p>
+    </div>
+
+    <!-- ======================== APP ======================== -->
+    <div id="app">
+
+        <!-- ======================== SIDEBAR OVERLAY ======================== -->
+        <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+        <!-- ======================== SIDEBAR ======================== -->
+        <aside id="sidebar" class="sidebar">
+            <div class="flex items-center gap-3 mb-8 px-2">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0a6b3c] to-[#d4a137] flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    G
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">G.B.B.</h1>
+                    <p class="text-xs text-[var(--text-light)]">Gemiyo Kebele</p>
+                </div>
+                <button onclick="closeSidebar()" class="ml-auto lg:hidden text-[var(--text-light)] hover:text-[var(--text)] text-xl">&times;</button>
+            </div>
+
+            <nav class="space-y-1">
+                <a href="#" onclick="navigate('home')" class="sidebar-link active" data-page="home">
+                    <span class="icon">🏠</span> Home
+                </a>
+                <a href="#" onclick="navigate('about')" class="sidebar-link" data-page="about">
+                    <span class="icon">📖</span> About
+                </a>
+                <a href="#" onclick="navigate('register')" class="sidebar-link" data-page="register">
+                    <span class="icon">📝</span> Register
+                </a>
+                <a href="#" onclick="navigate('directory')" class="sidebar-link" data-page="directory">
+                    <span class="icon">👥</span> Directory
+                </a>
+                <a href="#" onclick="navigate('business')" class="sidebar-link" data-page="business">
+                    <span class="icon">🏢</span> Business
+                </a>
+                <a href="#" onclick="navigate('volunteer')" class="sidebar-link" data-page="volunteer">
+                    <span class="icon">🤝</span> Volunteer
+                </a>
+                <a href="#" onclick="navigate('projects')" class="sidebar-link" data-page="projects">
+                    <span class="icon">🚀</span> Projects
+                </a>
+                <a href="#" onclick="navigate('donations')" class="sidebar-link" data-page="donations">
+                    <span class="icon">❤️</span> Donate
+                </a>
+                <a href="#" onclick="navigate('transparency')" class="sidebar-link" data-page="transparency">
+                    <span class="icon">📊</span> Transparency
+                </a>
+                <a href="#" onclick="navigate('news')" class="sidebar-link" data-page="news">
+                    <span class="icon">📰</span> News
+                </a>
+                <a href="#" onclick="navigate('gallery')" class="sidebar-link" data-page="gallery">
+                    <span class="icon">🖼️</span> Gallery
+                </a>
+                <a href="#" onclick="navigate('forum')" class="sidebar-link" data-page="forum">
+                    <span class="icon">💬</span> Forum
+                </a>
+                <a href="#" onclick="navigate('contact')" class="sidebar-link" data-page="contact">
+                    <span class="icon">📬</span> Contact
+                </a>
+                <hr class="my-4 border-[var(--text-light)]/10" />
+                <a href="#" onclick="navigate('admin')" class="sidebar-link" data-page="admin">
+                    <span class="icon">⚙️</span> Admin
+                </a>
+                <a href="#" onclick="navigate('analytics')" class="sidebar-link" data-page="analytics">
+                    <span class="icon">📊</span> Analytics
+                </a>
+            </nav>
+
+            <div class="mt-auto pt-6 border-t border-[var(--text-light)]/10 space-y-3">
+                <div class="flex gap-1 px-2">
+                    <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="setLanguage('am')">አማ</button>
+                    <button class="lang-btn" onclick="setLanguage('bj')">Bur</button>
+                    <button class="lang-btn" onclick="setLanguage('sw')">Kisw</button>
+                </div>
+                <button onclick="toggleDarkMode()" class="flex items-center gap-3 w-full px-4 py-2 rounded-xl hover:bg-[var(--text-light)]/5 transition text-[var(--text-light)]">
+                    <span id="darkModeIcon">🌙</span>
+                    <span id="darkModeLabel">Dark Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ======================== MAIN CONTENT ======================== -->
+        <main class="lg:ml-[260px] min-h-screen transition-all duration-300">
+
+            <!-- ======================== TOP BAR ======================== -->
+            <header class="sticky top-0 z-50 bg-[var(--bg)]/80 backdrop-blur-lg border-b border-[var(--text-light)]/10 px-4 py-3 flex items-center justify-between">
+                <button class="mobile-nav-toggle" onclick="toggleSidebar()">☰</button>
+                <div class="flex items-center gap-3">
+                    <span class="text-sm font-medium text-[var(--text-light)] hidden sm:inline">G.B.B. – Gemiyo Kebele</span>
+                    <span class="text-xs px-3 py-1 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] font-medium">v2.0</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-xl hover:bg-[var(--text-light)]/5 transition text-[var(--text-light)] text-lg hidden sm:block">
+                        <span id="darkModeIconTop">🌙</span>
+                    </button>
+                    <span class="text-xs text-[var(--text-light)] hidden md:inline">🇪🇹 Ethiopia</span>
+                </div>
+            </header>
+
+            <!-- ======================== PAGE CONTAINER ======================== -->
+            <div id="pageContainer" class="p-4 md:p-6 max-w-7xl mx-auto">
+                <!-- Pages are rendered here by JS -->
+            </div>
+
+            <!-- ======================== FOOTER ======================== -->
+            <footer class="border-t border-[var(--text-light)]/10 mt-12 py-8 px-4">
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+                    <div>
+                        <h4 class="font-bold text-base mb-2">G.B.B.</h4>
+                        <p class="text-[var(--text-light)]">Gemiyo Kebele<br />Burji Zone, South Ethiopia</p>
+                        <p class="mt-2 text-[var(--text-light)]">📞 +251913027342</p>
+                        <p class="text-[var(--text-light)]">📧 info@gemiyo.org</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-base mb-2">Quick Links</h4>
+                        <ul class="space-y-1 text-[var(--text-light)]">
+                            <li><a href="#" onclick="navigate('about')" class="hover:text-[var(--primary)]">About</a></li>
+                            <li><a href="#" onclick="navigate('projects')" class="hover:text-[var(--primary)]">Projects</a></li>
+                            <li><a href="#" onclick="navigate('donations')" class="hover:text-[var(--primary)]">Donate</a></li>
+                            <li><a href="#" onclick="navigate('business')" class="hover:text-[var(--primary)]">Business</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-base mb-2">Connect</h4>
+                        <div class="footer-social flex gap-3">
+                            <a href="#" title="Facebook">📘</a>
+                            <a href="#" title="Twitter">🐦</a>
+                            <a href="#" title="Instagram">📸</a>
+                            <a href="#" title="YouTube">▶️</a>
+                            <a href="https://web.whatsapp.com/" title="WhatsApp" target="_blank">💬</a>
+                        </div>
+                        <p class="mt-2 text-[var(--text-light)]">WhatsApp Group: <a href="https://web.whatsapp.com/" target="_blank" class="text-[var(--primary)]">Join</a></p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-base mb-2">Location</h4>
+                        <p class="text-[var(--text-light)]">Gemiyo Kebele, Burji Zone<br />South Ethiopia Regional State</p>
+                        <div class="mt-2 w-full h-24 rounded-lg bg-[var(--text-light)]/10 flex items-center justify-center text-[var(--text-light)] border border-dashed border-[var(--text-light)]/20">
+                            🗺️ Map
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center text-xs text-[var(--text-light)]/60 mt-8 border-t border-[var(--text-light)]/5 pt-4">
+                    &copy; 2026 <span class="font-medium text-[var(--text)]">Gamiyan'daa Biyakaa Baliballa (G.B.B.)</span> — Together We Build Our Home, Wherever We Live.
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JAVASCRIPT – Full application logic                           -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================
+        // STATE
+        // ============================================================
+        const state = {
+            currentPage: 'home',
+            darkMode: localStorage.getItem('gemiyoDark') === 'true',
+            language: localStorage.getItem('gemiyoLang') || 'en',
+            members: JSON.parse(localStorage.getItem('gemiyoMembers') || '[]'),
+            projects: JSON.parse(localStorage.getItem('gemiyoProjects') || '[]'),
+            donations: JSON.parse(localStorage.getItem('gemiyoDonations') || '[]'),
+            news: JSON.parse(localStorage.getItem('gemiyoNews') || '[]'),
+            gallery: JSON.parse(localStorage.getItem('gemiyoGallery') || '[]'),
+            forumPosts: JSON.parse(localStorage.getItem('gemiyoForumPosts') || '[]'),
+            businesses: JSON.parse(localStorage.getItem('gemiyoBusinesses') || '[]'),
+            volunteers: JSON.parse(localStorage.getItem('gemiyoVolunteers') || '[]'),
+            isAdmin: false,
+        };
+
+        // ============================================================
+        // SEED DATA (with neutral realistic placeholders)
+        // ============================================================
+        function seedData() {
+            if (state.projects.length === 0) {
+                state.projects = [];
+                localStorage.setItem('gemiyoProjects', JSON.stringify(state.projects));
+            }
+
+            if (state.donations.length === 0) {
+                state.donations = [
+                    { id: 1, name: 'Amanuel Bekele', phone: '+251 911 123 456', country: 'Ethiopia', amount: 25000,
+                        currency: 'ETB', paymentMethod: 'CBE Birr', project: 'New Primary School',
+                        message: 'For the children.', status: 'verified', reference: 'GEM-2026-001', createdAt: Date.now() -
+                        86400000 * 2 },
+                    { id: 2, name: 'Hanna Tesfaye', phone: '+251 922 234 567', country: 'Ethiopia', amount: 15000,
+                        currency: 'ETB', paymentMethod: 'TeleBirr', project: 'Clean Water Supply',
+                        message: 'Water is life.', status: 'completed', reference: 'GEM-2026-002', createdAt: Date.now() -
+                        86400000 * 5 },
+                    { id: 3, name: 'Dawit Shiferaw', phone: '+1 234 567 890', country: 'USA', amount: 500, currency: 'USD',
+                        paymentMethod: 'PayPal', project: 'Road Improvement', message: 'Proud of my home.',
+                        status: 'pending', reference: 'GEM-2026-003', createdAt: Date.now() - 86400000 * 10 },
+                    { id: 4, name: 'Selamawit Girma', phone: '+254 700 123 456', country: 'Kenya', amount: 1000,
+                        currency: 'KES', paymentMethod: 'M-Pesa', project: 'Agricultural Training Hub',
+                        message: 'Supporting farmers.', status: 'verified', reference: 'GEM-2026-004', createdAt: Date
+                        .now() - 86400000 * 1 },
+                    { id: 5, name: 'Yonas Desta', phone: '+251 933 345 678', country: 'Ethiopia', amount: 30000,
+                        currency: 'ETB', paymentMethod: 'Bank Transfer', project: 'New Primary School',
+                        message: 'From diaspora.', status: 'completed', reference: 'GEM-2026-005', createdAt: Date.now() -
+                        86400000 * 3 },
+                ];
+                localStorage.setItem('gemiyoDonations', JSON.stringify(state.donations));
+            }
+
+            if (state.news.length === 0) {
+                state.news = [
+                    { id: 1, title: 'Cultural Festival a Success', content: 'Hundreds gathered to celebrate Burji heritage.',
+                        date: Date.now() - 86400000 * 7, image: '🎉' },
+                    { id: 2, title: 'School Construction Underway', content: 'Foundation laid for the new primary school.',
+                        date: Date.now() - 86400000 * 14, image: '🏫' },
+                    { id: 3, title: 'Diaspora Webinar Held', content: 'Over 200 participants discussed development.',
+                        date: Date.now() - 86400000 * 3, image: '💻' },
+                ];
+                localStorage.setItem('gemiyoNews', JSON.stringify(state.news));
+            }
+
+            if (state.gallery.length === 0) {
+                state.gallery = [
+                    { id: 1, title: 'Green Hills', category: 'nature', emoji: '🌄' },
+                    { id: 2, title: 'Community Gathering', category: 'community', emoji: '👥' },
+                    { id: 3, title: 'Local School', category: 'schools', emoji: '📚' },
+                    { id: 4, title: 'Road Construction', category: 'roads', emoji: '🛣️' },
+                    { id: 5, title: 'Coffee Harvest', category: 'agriculture', emoji: '☕' },
+                    { id: 6, title: 'Historical Site', category: 'historical', emoji: '🏛️' },
+                    { id: 7, title: 'Solar Water Pump', category: 'development', emoji: '💧' },
+                    { id: 8, title: 'Children Playing', category: 'community', emoji: '🧒' },
+                ];
+                localStorage.setItem('gemiyoGallery', JSON.stringify(state.gallery));
+            }
+
+            if (state.forumPosts.length === 0) {
+                state.forumPosts = [
+                    { id: 1, name: 'Tadesse W.', title: 'Welcome to the Forum!', message: 'Share ideas and connect.',
+                        date: Date.now() - 86400000 * 2, replies: [] },
+                    { id: 2, name: 'Meron A.', title: 'Youth Empowerment Ideas', message: 'How can we create opportunities?',
+                        date: Date.now() - 86400000 * 1, replies: [{ id: 1, name: 'Dawit S.', message: 'Skills training!',
+                            date: Date.now() - 86400000 * 1 + 3600000 }] },
+                ];
+                localStorage.setItem('gemiyoForumPosts', JSON.stringify(state.forumPosts));
+            }
+
+            if (state.businesses.length === 0) {
+                state.businesses = [
+                    { id: 1, name: 'G.B.B. Community Meat Suppliers', owner: 'Community Members', phone: '+254700000000',
+                        whatsapp: '', country: 'Kenya', city: 'Nairobi',
+                        category: 'Meat Suppliers (Beef & Mutton)', description: 'G.B.B. community members based in Nairobi supplying quality beef and mutton to homes, hotels, and restaurants.',
+                        address: 'Nairobi, Kenya', website: '', facebook: '', logo: '🥩', approved: true,
+                        createdAt: Date.now() - 86400000 * 1 },
+                ];
+                localStorage.setItem('gemiyoBusinesses', JSON.stringify(state.businesses));
+            }
+
+            if (state.volunteers.length === 0) {
+                state.volunteers = [];
+                localStorage.setItem('gemiyoVolunteers', JSON.stringify(state.volunteers));
+            }
+        }
+        seedData();
+
+        // ============================================================
+        // HELPERS
+        // ============================================================
+        function saveState(key, data) {
+            localStorage.setItem(`gemiyo${key.charAt(0).toUpperCase() + key.slice(1)}`, JSON.stringify(data));
+        }
+
+        function getInitials(name) {
+            return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+        }
+
+        function formatDate(ts) {
+            return new Date(ts).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function formatCurrency(amount, currency = 'ETB') {
+            const symbols = { ETB: 'ETB ', USD: '$ ', KES: 'KES ' };
+            return (symbols[currency] || '') + Number(amount).toLocaleString();
+        }
+
+        function generateId() {
+            return Date.now() + Math.random() * 1000;
+        }
+
+        function generateReference() {
+            return 'GEM-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+        }
+
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = msg;
+            el.classList.add('show');
+            clearTimeout(el._timer);
+            el._timer = setTimeout(() => el.classList.remove('show'), 3000);
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('open');
+        }
+
+        function toggleDarkMode() {
+            state.darkMode = !state.darkMode;
+            localStorage.setItem('gemiyoDark', String(state.darkMode));
+            document.documentElement.classList.toggle('dark', state.darkMode);
+            updateDarkModeUI();
+            showToast(state.darkMode ? '🌙 Dark mode' : '☀️ Light mode');
+        }
+
+        function updateDarkModeUI() {
+            const icons = document.querySelectorAll('#darkModeIcon, #darkModeIconTop');
+            const labels = document.querySelectorAll('#darkModeLabel');
+            const icon = state.darkMode ? '☀️' : '🌙';
+            const label = state.darkMode ? 'Light Mode' : 'Dark Mode';
+            icons.forEach(el => el.textContent = icon);
+            labels.forEach(el => el.textContent = label);
+        }
+
+        // ============================================================
+        // LANGUAGE
+        // ============================================================
+        function setLanguage(lang) {
+            state.language = lang;
+            localStorage.setItem('gemiyoLang', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.lang-btn[onclick="setLanguage('${lang}')"]`)?.classList.add('active');
+            // Re-render current page with new language
+            renderPage(state.currentPage);
+            showToast(`Language: ${lang.toUpperCase()}`);
+        }
+
+        // Simple translation object (expand as needed)
+        const translations = {
+            en: {
+                slogan: 'Together We Build Our Home, Wherever We Live.',
+                welcome: 'Welcome to Gemiyo Kebele',
+                join: 'Join Community',
+                donate: 'Donate Now',
+                projects: 'View Projects',
+                about: 'About Us',
+                contact: 'Contact',
+            },
+            am: {
+                slogan: 'በአንድነት ቤታችንን እንገነባለን፣ የትም ብንኖር።',
+                welcome: 'እንኳን ወደ ገሚዮ ቀበሌ በደህና መጡ',
+                join: 'ማህበረሰቡን ይቀላቀሉ',
+                donate: 'ይለገሱ',
+                projects: 'ፕሮጀክቶችን ይመልከቱ',
+                about: 'ስለእኛ',
+                contact: 'ያግኙን',
+            },
+            bj: {
+                slogan: 'Humi dumi shana na, dhiga awi.',
+                welcome: 'Gemiyo Kebele balla',
+                join: 'Shana balla',
+                donate: 'Hisha',
+                projects: 'Harra projecta',
+                about: 'Nuuni',
+                contact: 'Dhuufi',
+            },
+            sw: {
+                slogan: 'Pamoja Tunajenga Nyumba Yetu, Popote Tunapoishi.',
+                welcome: 'Karibu Gemiyo Kebele',
+                join: 'Jiunge na Jamii',
+                donate: 'Changia Sasa',
+                projects: 'Tazama Miradi',
+                about: 'Kuhusu Sisi',
+                contact: 'Wasiliana',
+            }
+        };
+
+        function t(key) {
+            return translations[state.language]?.[key] || translations.en[key] || key;
+        }
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function navigate(page) {
+            state.currentPage = page;
+            closeSidebar();
+            document.querySelectorAll('.sidebar-link').forEach(el => {
+                el.classList.toggle('active', el.dataset.page === page);
+            });
+            renderPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // PAGE RENDERERS
+        // ============================================================
+        function renderPage(page) {
+            const container = document.getElementById('pageContainer');
+            const pages = {
+                home: renderHome,
+                about: renderAbout,
+                register: renderRegister,
+                directory: renderDirectory,
+                business: renderBusiness,
+                volunteer: renderVolunteer,
+                projects: renderProjects,
+                donations: renderDonations,
+                transparency: renderTransparency,
+                news: renderNews,
+                gallery: renderGallery,
+                forum: renderForum,
+                contact: renderContact,
+                admin: renderAdmin,
+                analytics: renderAnalytics,
+            };
+            container.innerHTML = (pages[page] || renderHome)();
+            container.className = 'p-4 md:p-6 max-w-7xl mx-auto animate-fade-in';
+        }
+
+        // ============================================================
+        // HOME
+        // ============================================================
+        function renderHome() {
+            const totalMembers = state.members.length;
+            const totalProjects = state.projects.length;
+            const totalRaised = state.donations.filter(d => d.status === 'verified' || d.status === 'completed')
+                .reduce((s, d) => s + d.amount, 0);
+            const donors = state.donations.filter(d => d.status === 'verified' || d.status === 'completed').length;
+            const volunteers = state.volunteers.filter(v => v.approved).length;
+            const businesses = state.businesses.filter(b => b.approved).length;
+            const countries = [...new Set(state.members.map(m => m.country))].length;
+
+            return `
+            <div class="animate-slide-up">
+              <!-- Hero with image -->
+              <section class="hero-image rounded-3xl p-8 md:p-16 text-white relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl">
+                  <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                    <span>🇪🇹</span> Gamiyan'daa Biyakaa Baliballa (G.B.B.)
+                  </div>
+                  <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">
+                    ${t('welcome')}
+                  </h1>
+                  <p class="text-xl md:text-2xl font-light mt-2 text-white/90">${t('slogan')}</p>
+                  <p class="mt-4 text-white/80 max-w-2xl text-base md:text-lg leading-relaxed">
+                    The official digital platform for all people of Gemiyo Kebele – uniting residents, diaspora, and friends.
+                  </p>
+                  <div class="flex flex-wrap gap-3 mt-8">
+                    <button onclick="navigate('register')" class="btn-primary">📝 ${t('join')}</button>
+                    <button onclick="navigate('donations')" class="btn-gold">❤️ ${t('donate')}</button>
+                    <button onclick="navigate('projects')" class="btn-secondary bg-white/10 text-white border-white/30 hover:bg-white/20">🚀 ${t('projects')}</button>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Statistics Cards -->
+              <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-8">
+                <div class="card-modern text-center">
+                  <div class="stat-number">${totalMembers}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">👥 Members</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${countries}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">🌍 Countries</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${formatCurrency(totalRaised)}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">💰 Raised</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${totalProjects}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">🏗️ Projects</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${volunteers}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">🤝 Volunteers</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${businesses}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">🏢 Businesses</div>
+                </div>
+              </div>
+
+              <!-- Recent News -->
+              <div class="mt-8">
+                <h2 class="text-2xl font-bold mb-4">📰 Latest News</h2>
+                <div class="space-y-3">
+                  ${state.news.slice(0, 3).map(n => `
+                    <div class="card-modern flex items-start gap-4">
+                      <div class="text-3xl">${n.image || '📌'}</div>
+                      <div>
+                        <h4 class="font-semibold">${n.title}</h4>
+                        <p class="text-sm text-[var(--text-light)]">${n.content.slice(0, 120)}${n.content.length > 120 ? '...' : ''}</p>
+                        <span class="text-xs text-[var(--text-light)]/60">${formatDate(n.date)}</span>
+                      </div>
+                    </div>
+                  `).join('')}
+                  ${state.news.length === 0 ? '<p class="text-[var(--text-light)]">No news yet.</p>' : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // ============================================================
+        // ABOUT (enhanced)
+        // ============================================================
+        function renderAbout() {
+            const sections = [
+                { icon: '📜', title: 'History', desc: 'Gemiyo Kebele has a rich history dating back generations. Our community has preserved its cultural heritage while embracing progress and development.' },
+                { icon: '📍', title: 'Location', desc: 'Nestled in the Burji Zone of South Ethiopia, Gemiyo Kebele features rolling green hills, fertile lands, and a climate ideal for agriculture.' },
+                { icon: '🎭', title: 'Culture', desc: 'Our community is known for its vibrant cultural practices, traditional music, dance, and ceremonies that strengthen social bonds.' },
+                { icon: '🗣️', title: 'Language', desc: 'The Burji language is spoken by the community, alongside Amharic and English for broader communication.' },
+                { icon: '📚', title: 'Education', desc: 'Education is a priority in Gemiyo. We are working to improve access to quality schooling for all children.' },
+                { icon: '🌾', title: 'Agriculture', desc: 'Agriculture is the backbone of our economy, with coffee, teff, and vegetables being key crops.' },
+                { icon: '💼', title: 'Economy', desc: 'Our economy is primarily agrarian, with growing small businesses and trade links to nearby towns.' },
+                { icon: '👑', title: 'Leadership', desc: 'Our leaders work tirelessly to guide the community towards sustainable development and prosperity.' },
+                { icon: '🌟', title: 'Vision', desc: 'We envision a thriving Gemiyo with modern infrastructure, empowered youth, and a strong connection to our diaspora.' },
+                { icon: '🎯', title: 'Development Goals', desc: 'Focus on education, health, water, roads, agriculture, and youth employment.' },
+            ];
+
+            return `
+            <div class="animate-slide-up">
+              <div class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-extrabold">About Gemiyo Kebele</h1>
+                <p class="text-[var(--text-light)] mt-2 max-w-2xl mx-auto">Discover the heart and soul of our community.</p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                ${sections.map(s => `
+                  <div class="card-modern">
+                    <div class="text-3xl mb-2">${s.icon}</div>
+                    <h3 class="font-bold text-lg">${s.title}</h3>
+                    <p class="text-sm text-[var(--text-light)] mt-1">${s.desc}</p>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div class="card-modern mt-8 text-center bg-gradient-to-br from-[var(--primary)]/5 to-[var(--gold)]/5 border-[var(--primary)]/20">
+                <h3 class="font-bold text-xl">🤝 Join Us in Building the Future</h3>
+                <p class="text-[var(--text-light)] mt-1">Whether you live in Gemiyo or abroad, your contribution matters.</p>
+                <button onclick="navigate('register')" class="btn-primary mt-4">Register Now</button>
+              </div>
+            </div>
+          `;
+        }
+
+        // ============================================================
+        // REGISTER (same as before)
+        // ============================================================
+        function renderRegister() {
+            return `
+            <div class="animate-slide-up max-w-2xl mx-auto">
+              <div class="text-center mb-8">
+                <h1 class="text-3xl font-extrabold">📝 Join Our Community</h1>
+                <p class="text-[var(--text-light)] mt-1">Register to connect with fellow Gemiyo members worldwide.</p>
+              </div>
+
+              <form id="registerForm" onsubmit="handleRegister(event)" class="card-modern space-y-4">
+                <div>
+                  <label class="block text-sm font-medium mb-1">Full Name *</label>
+                  <input type="text" id="regName" required class="input-modern" placeholder="e.g. Amanuel Bekele" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Phone Number *</label>
+                  <input type="tel" id="regPhone" required class="input-modern" placeholder="e.g. +251 911 123 456" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Country *</label>
+                  <input type="text" id="regCountry" required class="input-modern" placeholder="e.g. Ethiopia, USA, UK" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">City</label>
+                  <input type="text" id="regCity" class="input-modern" placeholder="e.g. Addis Ababa" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Profession</label>
+                  <input type="text" id="regProfession" class="input-modern" placeholder="e.g. Teacher, Engineer, Farmer" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Skills</label>
+                  <input type="text" id="regSkills" class="input-modern" placeholder="e.g. Project Management, Coding, Farming" />
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium mb-1">Age (optional)</label>
+                    <input type="number" id="regAge" class="input-modern" min="1" placeholder="e.g. 25" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium mb-1">Gender</label>
+                    <select id="regGender" class="input-modern">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Prefer not to say">Prefer not to say</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-1">Short Message</label>
+                  <textarea id="regMessage" rows="3" class="input-modern" placeholder="Tell us about yourself..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-full justify-center">✅ Register Now</button>
+              </form>
+
+              <p class="text-xs text-[var(--text-light)]/60 text-center mt-4">* Required fields. Your information helps us build a stronger community.</p>
+            </div>
+          `;
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const country = document.getElementById('regCountry').value.trim();
+            const city = document.getElementById('regCity').value.trim();
+            const profession = document.getElementById('regProfession').value.trim();
+            const skills = document.getElementById('regSkills').value.trim();
+            const age = document.getElementById('regAge').value;
+            const gender = document.getElementById('regGender').value;
+            const message = document.getElementById('regMessage').value.trim();
+
+            if (!name || !phone || !country) {
+                showToast('Please fill in all required fields.');
+                return;
+            }
+
+            const member = {
+                id: generateId(),
+                name,
+                phone,
+                country,
+                city: city || 'N/A',
+                profession: profession || 'N/A',
+                skills: skills || 'N/A',
+                age: age || 'N/A',
+                gender,
+                message: message || 'No message provided.',
+                createdAt: Date.now(),
+            };
+
+            state.members.push(member);
+            localStorage.setItem('gemiyoMembers', JSON.stringify(state.members));
+            showToast(`🎉 Welcome, ${name}! You are now part of Gemiyo.`);
+            document.getElementById('registerForm').reset();
+        }
+
+        // ============================================================
+        // DIRECTORY (same)
+        // ============================================================
+        function renderDirectory() {
+            const search = (arr, term) => {
+                if (!term) return arr;
+                const t = term.toLowerCase();
+                return arr.filter(m =>
+                    m.name.toLowerCase().includes(t) ||
+                    m.country.toLowerCase().includes(t) ||
+                    m.profession.toLowerCase().includes(t) ||
+                    m.skills.toLowerCase().includes(t)
+                );
+            };
+
+            const filtered = search(state.members, window._dirSearch || '');
+
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">👥 Community Directory</h1>
+                <div class="flex gap-2">
+                  <input type="text" id="dirSearch" class="input-modern flex-1 min-w-[160px]" placeholder="Search members..." value="${window._dirSearch || ''}" oninput="window._dirSearch=this.value; renderPage('directory')" />
+                  <button onclick="window._dirSearch=''; document.getElementById('dirSearch').value=''; renderPage('directory')" class="px-4 py-2 rounded-xl bg-[var(--text-light)]/10 hover:bg-[var(--text-light)]/20 transition">✕</button>
+                </div>
+              </div>
+
+              ${state.members.length === 0 ? `
+                <div class="card-modern text-center py-12">
+                  <div class="text-5xl mb-4">👤</div>
+                  <p class="text-[var(--text-light)]">No members registered yet.</p>
+                  <button onclick="navigate('register')" class="btn-primary mt-4">Be the first to register!</button>
+                </div>
+              ` : `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  ${filtered.map(m => `
+                    <div class="card-modern">
+                      <div class="flex items-start gap-3">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--gold)] flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                          ${getInitials(m.name)}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-bold text-lg truncate">${m.name}</h4>
+                          <p class="text-sm text-[var(--text-light)]">${m.profession}</p>
+                          <div class="flex flex-wrap gap-1 mt-1">
+                            <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">${m.country}</span>
+                            ${m.skills !== 'N/A' ? `<span class="text-xs px-2 py-0.5 rounded-full bg-[var(--gold)]/10 text-[var(--gold)]">${m.skills}</span>` : ''}
+                          </div>
+                          <p class="text-xs text-[var(--text-light)]/60 mt-2">Joined ${formatDate(m.createdAt)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+                ${filtered.length === 0 ? `<p class="text-center text-[var(--text-light)] mt-4">No members found matching your search.</p>` : ''}
+              `}
+            </div>
+          `;
+        }
+
+        // ============================================================
+        // BUSINESS (same as before)
+        // ============================================================
+        function renderBusiness() {
+            const categories = [...new Set(state.businesses.map(b => b.category))];
+            const searchTerm = window._bizSearch || '';
+            const categoryFilter = window._bizCategory || '';
+
+            let filtered = state.businesses.filter(b => b.approved);
+            if (searchTerm) {
+                const t = searchTerm.toLowerCase();
+                filtered = filtered.filter(b =>
+                    b.name.toLowerCase().includes(t) ||
+                    b.owner.toLowerCase().includes(t) ||
+                    b.category.toLowerCase().includes(t) ||
+                    b.country.toLowerCase().includes(t) ||
+                    b.city.toLowerCase().includes(t) ||
+                    b.description.toLowerCase().includes(t)
+                );
+            }
+            if (categoryFilter) {
+                filtered = filtered.filter(b => b.category === categoryFilter);
+            }
+
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">🏢 Business & Professional Directory</h1>
+                <button onclick="showAddBusiness()" class="btn-primary">➕ List Your Business</button>
+              </div>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                <input type="text" id="bizSearch" class="input-modern flex-1 min-w-[160px]" placeholder="Search business..." value="${searchTerm}" oninput="window._bizSearch=this.value; renderPage('business')" />
+                <select id="bizCategory" class="input-modern flex-1 min-w-[140px]" onchange="window._bizCategory=this.value; renderPage('business')">
+                  <option value="">All Categories</option>
+                  ${categories.map(c => `<option value="${c}" ${categoryFilter === c ? 'selected' : ''}>${c}</option>`).join('')}
+                </select>
+                <button onclick="window._bizSearch=''; window._bizCategory=''; document.getElementById('bizSearch').value=''; document.getElementById('bizCategory').value=''; renderPage('business')" class="px-4 py-2 rounded-xl bg-[var(--text-light)]/10 hover:bg-[var(--text-light)]/20 transition">✕</button>
+              </div>
+
+              ${filtered.length === 0 ? `
+                <div class="card-modern text-center py-12">
+                  <div class="text-5xl mb-4">🏢</div>
+                  <p class="text-[var(--text-light)]">No businesses listed yet. Be the first!</p>
+                </div>
+              ` : `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  ${filtered.map(b => `
+                    <div class="card-modern">
+                      <div class="flex items-start gap-3">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--gold)] to-[var(--red)] flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                          ${b.logo ? b.logo : getInitials(b.name)}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-bold text-lg truncate">${b.name}</h4>
+                          <p class="text-sm text-[var(--text-light)]">${b.owner}</p>
+                          <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">${b.category}</span>
+                          <p class="text-xs text-[var(--text-light)]/60 mt-1">${b.country}${b.city ? ', ' + b.city : ''}</p>
+                          <p class="text-sm text-[var(--text-light)] mt-1 line-clamp-2">${b.description}</p>
+                          <div class="flex flex-wrap gap-2 mt-2 text-xs">
+                            ${b.phone ? `<span class="font-medium">📞 ${b.phone}</span>` : ''}
+                            ${b.whatsapp ? `<span class="font-medium">💬 ${b.whatsapp}</span>` : ''}
+                          </div>
+                          ${b.website ? `<a href="${b.website}" target="_blank" class="text-xs text-[var(--primary)] hover:underline">${b.website}</a>` : ''}
+                          <p class="text-xs text-[var(--text-light)]/60 mt-1">Listed ${formatDate(b.createdAt)}</p>
+                        </div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+          `;
+        }
+
+        function showAddBusiness() {
+            const name = prompt('Business Name:');
+            if (!name) return;
+            const owner = prompt('Owner\'s Name:');
+            if (!owner) return;
+            const phone = prompt('Phone Number:');
+            if (!phone) return;
+            const whatsapp = prompt('WhatsApp Number (optional):') || '';
+            const country = prompt('Country:');
+            if (!country) return;
+            const city = prompt('City:') || '';
+            const category = prompt(
+                'Category (Meat Suppliers (Beef & Mutton), Agriculture and Livestock, Retail Shops, Hotels and Restaurants, Transportation, Construction, Manufacturing, Health Services, Education and Training, Information Technology, Finance and Banking, Tourism, Import and Export, Skilled Trades, Professional Services, Teachers, Engineers, Doctors, Women\'s Businesses, Youth Businesses, Other Community Services):'
+                ) || 'Other Community Services';
+            const description = prompt('Description of Products or Services:') || 'No description provided.';
+            const address = prompt('Physical Address (optional):') || '';
+            const website = prompt('Website (optional):') || '';
+            const facebook = prompt('Facebook Page (optional):') || '';
+            const logo = prompt('Business Logo or Photo (emoji or text, optional):') || '';
+
+            state.businesses.push({
+                id: generateId(),
+                name,
+                owner,
+                phone,
+                whatsapp,
+                country,
+                city,
+                category,
+                description,
+                address,
+                website,
+                facebook,
+                logo,
+                approved: false,
+                createdAt: Date.now(),
+            });
+            localStorage.setItem('gemiyoBusinesses', JSON.stringify(state.businesses));
+            showToast('✅ Business listed! Awaiting admin approval.');
+            renderPage('business');
+        }
+
+        // ============================================================
+        // VOLUNTEER (same as before)
+        // ============================================================
+        function renderVolunteer() {
+            const categories = [...new Set(state.volunteers.map(v => v.category))];
+            const searchTerm = window._volSearch || '';
+            const categoryFilter = window._volCategory || '';
+
+            let filtered = state.volunteers.filter(v => v.approved);
+            if (searchTerm) {
+                const t = searchTerm.toLowerCase();
+                filtered = filtered.filter(v =>
+                    v.name.toLowerCase().includes(t) ||
+                    v.profession.toLowerCase().includes(t) ||
+                    v.skills.toLowerCase().includes(t) ||
+                    v.country.toLowerCase().includes(t) ||
+                    v.languages.toLowerCase().includes(t) ||
+                    v.expertise.toLowerCase().includes(t)
+                );
+            }
+            if (categoryFilter) {
+                filtered = filtered.filter(v => v.category === categoryFilter);
+            }
+
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">🤝 Volunteer & Skills Bank</h1>
+                <button onclick="showAddVolunteer()" class="btn-primary">➕ Register as Volunteer</button>
+              </div>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                <input type="text" id="volSearch" class="input-modern flex-1 min-w-[160px]" placeholder="Search volunteers..." value="${searchTerm}" oninput="window._volSearch=this.value; renderPage('volunteer')" />
+                <select id="volCategory" class="input-modern flex-1 min-w-[140px]" onchange="window._volCategory=this.value; renderPage('volunteer')">
+                  <option value="">All Categories</option>
+                  ${categories.map(c => `<option value="${c}" ${categoryFilter === c ? 'selected' : ''}>${c}</option>`).join('')}
+                </select>
+                <button onclick="window._volSearch=''; window._volCategory=''; document.getElementById('volSearch').value=''; document.getElementById('volCategory').value=''; renderPage('volunteer')" class="px-4 py-2 rounded-xl bg-[var(--text-light)]/10 hover:bg-[var(--text-light)]/20 transition">✕</button>
+              </div>
+
+              ${filtered.length === 0 ? `
+                <div class="card-modern text-center py-12">
+                  <div class="text-5xl mb-4">🤝</div>
+                  <p class="text-[var(--text-light)]">No volunteers registered yet. Be the first!</p>
+                </div>
+              ` : `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  ${filtered.map(v => `
+                    <div class="card-modern">
+                      <div class="flex items-start gap-3">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--gold)] flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                          ${getInitials(v.name)}
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <h4 class="font-bold text-lg truncate">${v.name}</h4>
+                          <p class="text-sm text-[var(--text-light)]">${v.profession}</p>
+                          <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--gold)]/10 text-[var(--gold)]">${v.category}</span>
+                          <p class="text-xs text-[var(--text-light)]/60 mt-1">${v.country}${v.city ? ', ' + v.city : ''}</p>
+                          <p class="text-sm text-[var(--text-light)] mt-1 line-clamp-2">${v.bio || ''}</p>
+                          <div class="flex flex-wrap gap-1 mt-1">
+                            <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)]">${v.skills}</span>
+                            <span class="text-xs px-2 py-0.5 rounded-full bg-[var(--red)]/10 text-[var(--red)]">${v.availability}</span>
+                          </div>
+                          <p class="text-xs text-[var(--text-light)]/60 mt-1">Languages: ${v.languages}</p>
+                          <p class="text-xs text-[var(--text-light)]/60">${v.experience} years experience</p>
+                        </div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+          `;
+        }
+
+        function showAddVolunteer() {
+            const name = prompt('Full Name:');
+            if (!name) return;
+            const phone = prompt('Phone Number:');
+            if (!phone) return;
+            const whatsapp = prompt('WhatsApp Number (optional):') || '';
+            const email = prompt('Email (optional):') || '';
+            const country = prompt('Country:');
+            if (!country) return;
+            const city = prompt('City:') || '';
+            const profession = prompt('Profession:') || '';
+            const organization = prompt('Organization or Employer (optional):') || '';
+            const education = prompt('Highest Education Level (optional):') || '';
+            const experience = parseInt(prompt('Years of Experience:') || '0');
+            const languages = prompt('Languages Spoken:') || '';
+            const expertise = prompt('Areas of Expertise:') || '';
+            const skills = prompt('Skills:') || '';
+            const certifications = prompt('Certifications (optional):') || '';
+            const bio = prompt('Short Biography:') || '';
+            const availability = prompt('Availability (Weekdays, Weekends, Seasonal, Full-time, Part-time):') || 'Part-time';
+            const method = prompt('Preferred Volunteer Method (Online, In-person, Either):') || 'Either';
+            const category = prompt(
+                'Category (Teaching, Medicine and Healthcare, Engineering and Construction, Agriculture and Livestock, Information Technology, Business and Entrepreneurship, Finance and Accounting, Legal Services, Environmental Protection, Youth Development, Women\'s Empowerment, Community Leadership, Disaster and Emergency Response, Culture and Heritage, Sports and Recreation, Media and Communications, Research and Data Collection, Fundraising, Mentoring and Coaching, Translation and Interpretation, Other):'
+                ) || 'Other';
+
+            state.volunteers.push({
+                id: generateId(),
+                name,
+                phone,
+                whatsapp,
+                email,
+                country,
+                city,
+                profession,
+                organization,
+                education,
+                experience,
+                languages,
+                expertise,
+                skills,
+                certifications,
+                bio,
+                availability,
+                method,
+                category,
+                approved: false,
+                createdAt: Date.now(),
+            });
+            localStorage.setItem('gemiyoVolunteers', JSON.stringify(state.volunteers));
+            showToast('✅ Volunteer registered! Awaiting admin approval.');
+            renderPage('volunteer');
+        }
+
+        // ============================================================
+        // PROJECTS (same as before)
+        // ============================================================
+        function renderProjects() {
+            const statusColors = { planned: 'badge-planned', ongoing: 'badge-ongoing', completed: 'badge-completed' };
+
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">🚀 Development Projects</h1>
+                ${state.isAdmin ? `<button onclick="showAddProject()" class="btn-primary">➕ New Project</button>` : ''}
+              </div>
+
+              ${state.projects.length === 0 ? `
+                <div class="card-modern text-center py-12">
+                  <div class="text-5xl mb-4">📋</div>
+                  <p class="text-[var(--text-light)]">No projects yet. Check back soon!</p>
+                </div>
+              ` : `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  ${state.projects.map(p => `
+                    <div class="card-modern">
+                      <div class="flex items-start justify-between">
+                        <h3 class="font-bold text-lg">${p.title}</h3>
+                        <span class="badge-status ${statusColors[p.status] || 'badge-planned'}">${p.status.charAt(0).toUpperCase() + p.status.slice(1)}</span>
+                      </div>
+                      <p class="text-sm text-[var(--text-light)] mt-1">${p.description}</p>
+                      <div class="mt-3 space-y-1">
+                        <div class="flex justify-between text-sm">
+                          <span class="text-[var(--text-light)]">Budget: ${formatCurrency(p.budget)}</span>
+                          <span class="font-medium">${formatCurrency(p.raised)} raised</span>
+                        </div>
+                        <div class="progress-bar">
+                          <div class="fill" style="width: ${p.progress}%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-[var(--text-light)]/60">
+                          <span>${p.progress}% complete</span>
+                          <span>${formatCurrency(p.budget - p.raised)} remaining</span>
+                        </div>
+                      </div>
+                      ${state.isAdmin ? `
+                        <div class="flex gap-2 mt-3">
+                          <button onclick="deleteProject(${p.id})" class="text-sm text-red-500 hover:text-red-700">Delete</button>
+                        </div>
+                      ` : ''}
+                      <button onclick="navigate('donations')" class="btn-gold w-full mt-3 text-center justify-center text-sm py-2">❤️ Donate to this Project</button>
+                    </div>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+          `;
+        }
+
+        function showAddProject() {
+            const name = prompt('Project Title:');
+            if (!name) return;
+            const desc = prompt('Description:') || 'No description provided.';
+            const budget = parseFloat(prompt('Budget (ETB):')) || 0;
+            const status = prompt('Status (planned/ongoing/completed):') || 'planned';
+
+            state.projects.push({
+                id: generateId(),
+                title: name,
+                description: desc,
+                budget,
+                raised: 0,
+                progress: 0,
+                status: status.toLowerCase(),
+                createdAt: Date.now(),
+            });
+            localStorage.setItem('gemiyoProjects', JSON.stringify(state.projects));
+            showToast('✅ Project added successfully!');
+            renderPage('projects');
+        }
+
+        function deleteProject(id) {
+            if (!confirm('Delete this project?')) return;
+            state.projects = state.projects.filter(p => p.id !== id);
+            localStorage.setItem('gemiyoProjects', JSON.stringify(state.projects));
+            showToast('Project deleted.');
+            renderPage('projects');
+        }
+
+        // ============================================================
+        // DONATIONS (improved with QR and instructions)
+        // ============================================================
+        function renderDonations() {
+            const projectOptions = state.projects.map(p => `<option value="${p.title}">${p.title}</option>`).join('');
+
+            return `
+            <div class="animate-slide-up">
+              <h1 class="text-3xl font-extrabold mb-6">❤️ Donation & Fundraising</h1>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Form -->
+                <div class="card-modern">
+                  <h3 class="font-bold text-lg mb-4">Make a Donation</h3>
+                  <form id="donationForm" onsubmit="handleDonation(event)">
+                    <div class="space-y-3">
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Full Name (optional)</label>
+                        <input type="text" id="donName" class="input-modern" placeholder="Your name" />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Phone Number *</label>
+                        <input type="tel" id="donPhone" required class="input-modern" placeholder="+251 ..." />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Country *</label>
+                        <input type="text" id="donCountry" required class="input-modern" placeholder="e.g. Ethiopia, USA" />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Amount *</label>
+                        <input type="number" id="donAmount" required class="input-modern" placeholder="e.g. 1000" min="1" />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Currency *</label>
+                        <select id="donCurrency" required class="input-modern">
+                          <option value="ETB">Ethiopian Birr (ETB)</option>
+                          <option value="KES">Kenyan Shilling (KES)</option>
+                          <option value="USD">US Dollar (USD)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Payment Method *</label>
+                        <select id="donPaymentMethod" required class="input-modern">
+                          <option value="CBE Bank Transfer">CBE Bank Transfer</option>
+                          <option value="CBE Birr">CBE Birr</option>
+                          <option value="TeleBirr">TeleBirr</option>
+                          <option value="M-Pesa">M-Pesa (Kenya)</option>
+                          <option value="Bank Transfer">Bank Transfer</option>
+                          <option value="Visa/Mastercard">Visa / Mastercard (future)</option>
+                          <option value="PayPal">PayPal (future)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Select Project</label>
+                        <select id="donProject" class="input-modern">
+                          <option value="General Fund">General Fund</option>
+                          ${projectOptions}
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Message (optional)</label>
+                        <textarea id="donMessage" rows="2" class="input-modern" placeholder="Your message..."></textarea>
+                      </div>
+                      <button type="submit" class="btn-gold w-full justify-center">❤️ Donate Now</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Instructions & QR -->
+                <div>
+                  <div class="card-modern">
+                    <h3 class="font-bold text-lg mb-4">💳 Payment Instructions</h3>
+                    <div id="paymentInstructions" class="p-4 bg-[var(--text-light)]/5 rounded-xl text-sm">
+                      <p class="font-medium">Select a payment method above to see details.</p>
+                    </div>
+                    <!-- QR placeholders -->
+                    <div class="mt-4 flex flex-wrap gap-4 items-center">
+                      <div class="qr-placeholder">📱</div>
+                      <div class="qr-placeholder">📱</div>
+                      <div class="qr-placeholder">📱</div>
+                      <p class="text-xs text-[var(--text-light)]">Scan QR codes for CBE, TeleBirr, M-Pesa (coming)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Receipt (hidden by default) -->
+              <div id="receiptContainer" class="mt-6 hidden">
+                <div class="card-modern border-2 border-[var(--gold)]/30 bg-gradient-to-br from-[var(--gold)]/5 to-[var(--primary)]/5">
+                  <h3 class="font-bold text-xl mb-2">✅ Donation Receipt</h3>
+                  <div id="receiptContent" class="space-y-1 text-sm"></div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // Update payment instructions on method change
+        document.addEventListener('change', function(e) {
+            if (e.target.id === 'donPaymentMethod') {
+                const method = e.target.value;
+                const instructions = {
+                    'CBE Bank Transfer': '🏦 Account: Commercial Bank of Ethiopia, Acc: 1000 1234 5678, Branch: Gemiyo, Swift: CBETETADD',
+                    'CBE Birr': '📱 CBE Birr: +251 911 123 456 (Amanuel Bekele)',
+                    'TeleBirr': '📱 TeleBirr: +251 911 123 456 (Amanuel Bekele)',
+                    'M-Pesa': '📱 M-Pesa (Kenya): +254 700 123 456 (Dawit Shiferaw)',
+                    'Bank Transfer': '🏦 Bank: Awash Bank, Acc: 123456789, Branch: Addis Ababa',
+                    'Visa/Mastercard': '💳 Visa/Mastercard payment coming soon.',
+                    'PayPal': '💳 PayPal payment coming soon.',
+                };
+                const container = document.getElementById('paymentInstructions');
+                if (container) {
+                    container.innerHTML = `<p class="font-medium">${method}</p><p class="text-[var(--text-light)]">${instructions[method] || 'Instructions not available.'}</p>`;
+                }
+            }
+        });
+
+        function handleDonation(e) {
+            e.preventDefault();
+            const name = document.getElementById('donName').value.trim() || 'Anonymous';
+            const phone = document.getElementById('donPhone').value.trim();
+            const country = document.getElementById('donCountry').value.trim();
+            const amount = parseFloat(document.getElementById('donAmount').value);
+            const currency = document.getElementById('donCurrency').value;
+            const paymentMethod = document.getElementById('donPaymentMethod').value;
+            const project = document.getElementById('donProject').value;
+            const message = document.getElementById('donMessage').value.trim();
+
+            if (!phone || !country || !amount || amount < 1) {
+                showToast('Please fill in all required fields correctly.');
+                return;
+            }
+
+            const reference = generateReference();
+            const donation = {
+                id: generateId(),
+                name,
+                phone,
+                country,
+                amount,
+                currency,
+                paymentMethod,
+                project,
+                message: message || 'No message.',
+                status: 'pending',
+                reference,
+                createdAt: Date.now(),
+            };
+
+            state.donations.push(donation);
+            localStorage.setItem('gemiyoDonations', JSON.stringify(state.donations));
+
+            // Show receipt
+            const receipt = document.getElementById('receiptContainer');
+            const content = document.getElementById('receiptContent');
+            content.innerHTML = `
+              <p><strong>Donor:</strong> ${donation.name}</p>
+              <p><strong>Project:</strong> ${donation.project}</p>
+              <p><strong>Amount:</strong> ${formatCurrency(donation.amount, donation.currency)}</p>
+              <p><strong>Currency:</strong> ${donation.currency}</p>
+              <p><strong>Payment Method:</strong> ${donation.paymentMethod}</p>
+              <p><strong>Date:</strong> ${formatDate(donation.createdAt)}</p>
+              <p><strong>Reference:</strong> <span class="font-mono bg-[var(--text-light)]/10 px-2 py-0.5 rounded">${donation.reference}</span></p>
+            `;
+            receipt.classList.remove('hidden');
+
+            showToast(`🙏 Thank you, ${donation.name}! Your donation of ${formatCurrency(donation.amount, donation.currency)} is being processed. Reference: ${donation.reference}`);
+            document.getElementById('donationForm').reset();
+            receipt.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // ============================================================
+        // TRANSPARENCY (same)
+        // ============================================================
+        function renderTransparency() {
+            const totalRaised = state.donations.filter(d => d.status === 'verified' || d.status === 'completed')
+                .reduce((s, d) => s + d.amount, 0);
+            const totalDonors = state.donations.filter(d => d.status === 'verified' || d.status === 'completed').length;
+
+            const projectFunds = {};
+            state.donations.filter(d => d.status === 'verified' || d.status === 'completed').forEach(d => {
+                projectFunds[d.project] = (projectFunds[d.project] || 0) + d.amount;
+            });
+
+            const recent = state.donations.filter(d => d.status === 'verified' || d.status === 'completed')
+                .slice().reverse().slice(0, 10);
+
+            return `
+            <div class="animate-slide-up">
+              <h1 class="text-3xl font-extrabold mb-6">📊 Donation Transparency</h1>
+
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="card-modern text-center">
+                  <div class="stat-number">${formatCurrency(totalRaised)}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">Total Raised</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${totalDonors}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">Total Donors</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${state.projects.length}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">Projects</div>
+                </div>
+                <div class="card-modern text-center">
+                  <div class="stat-number">${totalDonors > 0 ? Math.round(totalRaised / totalDonors) : 0}</div>
+                  <div class="text-sm text-[var(--text-light)] font-medium">Avg Donation</div>
+                </div>
+              </div>
+
+              <div class="card-modern mb-6">
+                <h3 class="font-bold text-lg mb-4">📈 Funds Raised Per Project</h3>
+                ${Object.keys(projectFunds).length === 0 ? '<p class="text-[var(--text-light)]">No verified donations yet.</p>' : ''}
+                <div class="space-y-2">
+                  ${Object.entries(projectFunds).map(([project, amount]) => `
+                    <div class="flex items-center justify-between text-sm">
+                      <span>${project}</span>
+                      <span class="font-medium">${formatCurrency(amount)}</span>
+                      <div class="flex-1 mx-4 h-2 bg-[var(--text-light)]/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-[var(--primary)] to-[var(--gold)] rounded-full" style="width: ${Math.min(100, (amount / totalRaised) * 100)}%"></div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="card-modern">
+                <h3 class="font-bold text-lg mb-4">🕒 Recent Donations</h3>
+                <div class="space-y-2 max-h-64 overflow-y-auto pr-2">
+                  ${recent.length === 0 ? '<p class="text-[var(--text-light)]">No recent donations.</p>' : ''}
+                  ${recent.map(d => `
+                    <div class="flex items-center justify-between py-2 border-b border-[var(--text-light)]/5">
+                      <div>
+                        <p class="font-medium">${d.name}</p>
+                        <p class="text-xs text-[var(--text-light)]">${d.project}</p>
+                      </div>
+                      <div class="text-right">
+                        <span class="font-medium">${formatCurrency(d.amount, d.currency)}</span>
+                        <p class="text-xs text-[var(--text-light)]/60">${formatDate(d.createdAt)}</p>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // ============================================================
+        // NEWS (same)
+        // ============================================================
+        function renderNews() {
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">📰 News & Announcements</h1>
+                ${state.isAdmin ? `<button onclick="showAddNews()" class="btn-primary">➕ Publish News</button>` : ''}
+              </div>
+
+              ${state.news.length === 0 ? `
+                <div class="card-modern text-center py-12">
+                  <div class="text-5xl mb-4">📭</div>
+                  <p class="text-[var(--text-light)]">No news published yet.</p>
+                </div>
+              ` : `
+                <div class="space-y-4">
+                  ${state.news.slice().sort((a, b) => b.date - a.date).map(n => `
+                    <div class="card-modern">
+                      <div class="flex items-start gap-4">
+                        <div class="text-4xl">${n.image || '📌'}</div>
+                        <div class="flex-1">
+                          <h3 class="font-bold text-xl">${n.title}</h3>
+                          <p class="text-sm text-[var(--text-light)]/60">${formatDate(n.date)}</p>
+                          <p class="mt-2 text-[var(--text-light)]">${n.content}</p>
+                          ${state.isAdmin ? `<button onclick="deleteNews(${n.id})" class="text-sm text-red-500 hover:text-red-700 mt-2">Delete</button>` : ''}
+                        </div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              `}
+            </div>
+          `;
+        }
+
+        function showAddNews() {
+            const title = prompt('News Title:');
+            if (!title) return;
+            const content = prompt('Content:') || 'No content provided.';
+            const image = prompt('Emoji or image indicator (e.g. 📢):') || '📌';
+
+            state.news.push({
+                id: generateId(),
+                title,
+                content,
+                image,
+                date: Date.now(),
+            });
+            localStorage.setItem('gemiyoNews', JSON.stringify(state.news));
+            showToast('📰 News published!');
+            renderPage('news');
+        }
+
+        function deleteNews(id) {
+            if (!confirm('Delete this news?')) return;
+            state.news = state.news.filter(n => n.id !== id);
+            localStorage.setItem('gemiyoNews', JSON.stringify(state.news));
+            showToast('News deleted.');
+            renderPage('news');
+        }
+
+        // ============================================================
+        // GALLERY (same)
+        // ============================================================
+        function renderGallery() {
+            const categories = [...new Set(state.gallery.map(g => g.category))];
+
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">🖼️ Gallery</h1>
+                ${state.isAdmin ? `<button onclick="showAddGallery()" class="btn-primary">➕ Add Image</button>` : ''}
+              </div>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                <button onclick="window._galleryFilter=''" class="px-4 py-1.5 rounded-full text-sm font-medium transition ${!window._galleryFilter ? 'bg-[var(--primary)] text-white' : 'bg-[var(--text-light)]/10 hover:bg-[var(--text-light)]/20'}" style="background:${!window._galleryFilter ? 'var(--primary)' : 'transparent'}; color:${!window._galleryFilter ? 'white' : 'var(--text-light)'}">All</button>
+                ${categories.map(c => `
+                  <button onclick="window._galleryFilter='${c}'; renderPage('gallery')" class="px-4 py-1.5 rounded-full text-sm font-medium transition ${window._galleryFilter === c ? 'bg-[var(--primary)] text-white' : 'bg-[var(--text-light)]/10 hover:bg-[var(--text-light)]/20'}" style="background:${window._galleryFilter === c ? 'var(--primary)' : 'transparent'}; color:${window._galleryFilter === c ? 'white' : 'var(--text-light)'}">${c.charAt(0).toUpperCase() + c.slice(1)}</button>
+                `).join('')}
+              </div>
+
+              <div class="gallery-grid">
+                ${state.gallery.filter(g => !window._galleryFilter || g.category === window._galleryFilter).map(g => `
+                  <div class="gallery-item">
+                    <div class="w-full h-full flex items-center justify-center text-7xl bg-[var(--text-light)]/5">
+                      ${g.emoji || '🖼️'}
+                    </div>
+                    <div class="overlay">${g.title}</div>
+                    ${state.isAdmin ? `<button onclick="deleteGallery(${g.id})" class="absolute top-2 right-2 bg-red-500/80 text-white rounded-full w-8 h-8 text-sm hover:bg-red-600 transition">✕</button>` : ''}
+                  </div>
+                `).join('')}
+                ${state.gallery.filter(g => !window._galleryFilter || g.category === window._galleryFilter).length === 0 ? '<p class="text-[var(--text-light)] col-span-full text-center">No images in this category.</p>' : ''}
+              </div>
+            </div>
+          `;
+        }
+
+        function showAddGallery() {
+            const title = prompt('Image title:');
+            if (!title) return;
+            const category = prompt('Category (nature, schools, roads, community, agriculture, historical, development):') || 'community';
+            const emoji = prompt('Emoji to represent the image:') || '🖼️';
+
+            state.gallery.push({
+                id: generateId(),
+                title,
+                category: category.toLowerCase(),
+                emoji,
+            });
+            localStorage.setItem('gemiyoGallery', JSON.stringify(state.gallery));
+            showToast('🖼️ Image added to gallery!');
+            renderPage('gallery');
+        }
+
+        function deleteGallery(id) {
+            if (!confirm('Delete this image?')) return;
+            state.gallery = state.gallery.filter(g => g.id !== id);
+            localStorage.setItem('gemiyoGallery', JSON.stringify(state.gallery));
+            showToast('Image deleted.');
+            renderPage('gallery');
+        }
+
+        // ============================================================
+        // FORUM (same)
+        // ============================================================
+        function renderForum() {
+            const searchTerm = window._forumSearch || '';
+            const posts = state.forumPosts.filter(p =>
+                p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                p.message.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">💬 Community Forum</h1>
+                <button onclick="showNewForumPost()" class="btn-primary">✏️ New Discussion</button>
+              </div>
+
+              <div class="flex gap-2 mb-4">
+                <input type="text" id="forumSearch" class="input-modern flex-1" placeholder="Search discussions..." value="${searchTerm}" oninput="window._forumSearch=this.value; renderPage('forum')" />
+                <button onclick="window._forumSearch=''; document.getElementById('forumSearch').value=''; renderPage('forum')" class="px-4 py-2 rounded-xl bg-[var(--text-light)]/10 hover:bg-[var(--text-light)]/20 transition">✕</button>
+              </div>
+
+              ${posts.length === 0 ? `
+                <div class="card-modern text-center py-12">
+                  <div class="text-5xl mb-4">🗣️</div>
+                  <p class="text-[var(--text-light)]">No discussions found. Start one!</p>
+                </div>
+              ` : `
+                ${posts.slice().sort((a, b) => b.date - a.date).map(p => `
+                  <div class="forum-post">
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <h3 class="font-bold text-lg">${p.title}</h3>
+                        <div class="flex items-center gap-3 text-sm text-[var(--text-light)]">
+                          <span>👤 ${p.name}</span>
+                          <span>•</span>
+                          <span>${formatDate(p.date)}</span>
+                          <span>•</span>
+                          <span>💬 ${(p.replies || []).length} replies</span>
+                        </div>
+                      </div>
+                      <button onclick="toggleForumReplies(${p.id})" class="text-[var(--primary)] text-sm font-medium">View</button>
+                    </div>
+                    <p class="mt-2 text-[var(--text-light)]">${p.message}</p>
+
+                    <div id="forumReplies_${p.id}" class="mt-3 pl-4 border-l-2 border-[var(--primary)]/20 hidden">
+                      <div class="space-y-2">
+                        ${(p.replies || []).map(r => `
+                          <div class="bg-[var(--text-light)]/5 rounded-lg p-3">
+                            <div class="flex items-center gap-2 text-sm">
+                              <span class="font-medium">${r.name}</span>
+                              <span class="text-[var(--text-light)]/60 text-xs">${formatDate(r.date)}</span>
+                            </div>
+                            <p class="text-sm text-[var(--text-light)]">${r.message}</p>
+                          </div>
+                        `).join('')}
+                        <form onsubmit="handleReply(event, ${p.id})" class="flex gap-2 mt-2">
+                          <input type="text" id="replyName_${p.id}" placeholder="Your name" class="input-modern text-sm flex-1" required />
+                          <input type="text" id="replyMsg_${p.id}" placeholder="Reply..." class="input-modern text-sm flex-1" required />
+                          <button type="submit" class="btn-primary text-sm py-2 px-4">Reply</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              `}
+            </div>
+          `;
+        }
+
+        function toggleForumReplies(id) {
+            const el = document.getElementById(`forumReplies_${id}`);
+            if (el) el.classList.toggle('hidden');
+        }
+
+        function showNewForumPost() {
+            const name = prompt('Your name:');
+            if (!name) return;
+            const title = prompt('Discussion title:');
+            if (!title) return;
+            const message = prompt('Your message:') || 'No message.';
+
+            state.forumPosts.push({
+                id: generateId(),
+                name,
+                title,
+                message,
+                date: Date.now(),
+                replies: [],
+            });
+            localStorage.setItem('gemiyoForumPosts', JSON.stringify(state.forumPosts));
+            showToast('💬 Discussion started!');
+            renderPage('forum');
+        }
+
+        function handleReply(e, postId) {
+            e.preventDefault();
+            const name = document.getElementById(`replyName_${postId}`).value.trim();
+            const msg = document.getElementById(`replyMsg_${postId}`).value.trim();
+            if (!name || !msg) { showToast('Please fill in all fields.'); return; }
+
+            const post = state.forumPosts.find(p => p.id === postId);
+            if (post) {
+                post.replies = post.replies || [];
+                post.replies.push({ id: generateId(), name, message: msg, date: Date.now() });
+                localStorage.setItem('gemiyoForumPosts', JSON.stringify(state.forumPosts));
+                showToast('Reply posted!');
+                renderPage('forum');
+            }
+        }
+
+        // ============================================================
+        // CONTACT (same)
+        // ============================================================
+        function renderContact() {
+            return `
+            <div class="animate-slide-up">
+              <h1 class="text-3xl font-extrabold mb-6">📬 Contact Us</h1>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="card-modern">
+                  <h3 class="font-bold text-lg mb-4">Send a Message</h3>
+                  <form onsubmit="handleContact(event)">
+                    <div class="space-y-3">
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Full Name *</label>
+                        <input type="text" id="contactName" required class="input-modern" placeholder="Your name" />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Email or Phone *</label>
+                        <input type="text" id="contactInfo" required class="input-modern" placeholder="email@example.com or +251 ..." />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Subject *</label>
+                        <input type="text" id="contactSubject" required class="input-modern" placeholder="Subject" />
+                      </div>
+                      <div>
+                        <label class="block text-sm font-medium mb-1">Message *</label>
+                        <textarea id="contactMsg" rows="4" required class="input-modern" placeholder="Your message..."></textarea>
+                      </div>
+                      <button type="submit" class="btn-primary w-full justify-center">📨 Send Message</button>
+                    </div>
+                  </form>
+                </div>
+
+                <div>
+                  <div class="card-modern space-y-4">
+                    <h3 class="font-bold text-lg">Get in Touch</h3>
+                    <div class="flex items-start gap-3">
+                      <span class="text-xl">📞</span>
+                      <div>
+                        <p class="font-medium">Phone</p>
+                        <p class="text-[var(--text-light)]">+251 911 123 456</p>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-xl">📍</span>
+                      <div>
+                        <p class="font-medium">Address</p>
+                        <p class="text-[var(--text-light)]">Gemiyo Kebele, Burji Zone,<br />South Ethiopia Regional State, Ethiopia</p>
+                      </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                      <span class="text-xl">🌐</span>
+                      <div>
+                        <p class="font-medium">Social Media</p>
+                        <div class="flex gap-3 mt-1">
+                          <a href="#" class="text-[var(--text-light)] hover:text-[var(--primary)] text-2xl">📘</a>
+                          <a href="#" class="text-[var(--text-light)] hover:text-[var(--primary)] text-2xl">🐦</a>
+                          <a href="#" class="text-[var(--text-light)] hover:text-[var(--primary)] text-2xl">📸</a>
+                          <a href="#" class="text-[var(--text-light)] hover:text-[var(--primary)] text-2xl">▶️</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-modern mt-4">
+                    <h3 class="font-bold text-lg mb-2">📍 Find Us</h3>
+                    <div class="w-full h-48 rounded-xl bg-[var(--text-light)]/10 flex items-center justify-center text-[var(--text-light)] border-2 border-dashed border-[var(--text-light)]/20">
+                      <div class="text-center">
+                        <div class="text-4xl mb-2">🗺️</div>
+                        <p class="text-sm">Google Maps — Gemiyo Kebele</p>
+                        <p class="text-xs text-[var(--text-light)]/60">(Map integration coming soon)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value.trim();
+            const info = document.getElementById('contactInfo').value.trim();
+            const subject = document.getElementById('contactSubject').value.trim();
+            const msg = document.getElementById('contactMsg').value.trim();
+
+            if (!name || !info || !subject || !msg) {
+                showToast('Please fill in all fields.');
+                return;
+            }
+
+            showToast(`📬 Thank you, ${name}! We'll get back to you soon.`);
+            e.target.reset();
+        }
+
+        // ============================================================
+        // ADMIN (enhanced with full management)
+        // ============================================================
+        function renderAdmin() {
+            if (!state.isAdmin) {
+                return `
+                <div class="animate-slide-up max-w-md mx-auto">
+                  <div class="card-modern text-center">
+                    <div class="text-5xl mb-4">🔒</div>
+                    <h2 class="text-2xl font-bold">Admin Access</h2>
+                    <p class="text-[var(--text-light)] mt-1">Please enter the admin password to continue.</p>
+                    <form onsubmit="handleAdminLogin(event)" class="mt-4">
+                      <input type="password" id="adminPass" class="input-modern" placeholder="Enter password" required />
+                      <button type="submit" class="btn-primary w-full mt-3 justify-center">🔑 Unlock</button>
+                    </form>
+                    <p class="text-xs text-[var(--text-light)]/60 mt-3">Contact the administrator if you have forgotten the password.</p>
+                  </div>
+                </div>
+              `;
+            }
+
+            const totalMembers = state.members.length;
+            const totalProjects = state.projects.length;
+            const totalDonations = state.donations.length;
+            const totalRaised = state.donations.filter(d => d.status === 'verified' || d.status === 'completed')
+                .reduce((s, d) => s + d.amount, 0);
+            const totalNews = state.news.length;
+            const totalForum = state.forumPosts.length;
+            const totalBusiness = state.businesses.length;
+            const totalVolunteers = state.volunteers.length;
+            const pendingBusiness = state.businesses.filter(b => !b.approved).length;
+            const pendingVolunteers = state.volunteers.filter(v => !v.approved).length;
+            const pendingDonations = state.donations.filter(d => d.status === 'pending').length;
+
+            return `
+            <div class="animate-slide-up">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <h1 class="text-3xl font-extrabold">⚙️ Admin Dashboard</h1>
+                <button onclick="state.isAdmin=false; renderPage('admin')" class="text-sm text-red-500 hover:text-red-700">🚪 Logout</button>
+              </div>
+
+              <div class="admin-stats-grid">
+                <div class="admin-stat-card"><div class="icon-wrap green">👥</div><div class="stat-number text-2xl">${totalMembers}</div><div class="text-sm text-[var(--text-light)]">Members</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap gold">🚀</div><div class="stat-number text-2xl">${totalProjects}</div><div class="text-sm text-[var(--text-light)]">Projects</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap blue">❤️</div><div class="stat-number text-2xl">${totalDonations}</div><div class="text-sm text-[var(--text-light)]">Donations</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap purple">💰</div><div class="stat-number text-2xl">${formatCurrency(totalRaised)}</div><div class="text-sm text-[var(--text-light)]">Raised</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap green">📰</div><div class="stat-number text-2xl">${totalNews}</div><div class="text-sm text-[var(--text-light)]">News</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap gold">💬</div><div class="stat-number text-2xl">${totalForum}</div><div class="text-sm text-[var(--text-light)]">Forum</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap blue">🏢</div><div class="stat-number text-2xl">${totalBusiness}</div><div class="text-sm text-[var(--text-light)]">Businesses</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap purple">🤝</div><div class="stat-number text-2xl">${totalVolunteers}</div><div class="text-sm text-[var(--text-light)]">Volunteers</div></div>
+              </div>
+
+              <!-- Pending Approvals -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div class="card-modern">
+                  <h3 class="font-bold text-lg">⏳ Pending Business Approvals</h3>
+                  <p class="text-2xl font-bold text-[var(--gold)]">${pendingBusiness}</p>
+                  ${pendingBusiness > 0 ? `<button onclick="viewPendingBusiness()" class="btn-primary text-sm py-1 mt-2">Review</button>` : ''}
+                </div>
+                <div class="card-modern">
+                  <h3 class="font-bold text-lg">⏳ Pending Volunteer Approvals</h3>
+                  <p class="text-2xl font-bold text-[var(--gold)]">${pendingVolunteers}</p>
+                  ${pendingVolunteers > 0 ? `<button onclick="viewPendingVolunteers()" class="btn-primary text-sm py-1 mt-2">Review</button>` : ''}
+                </div>
+                <div class="card-modern">
+                  <h3 class="font-bold text-lg">⏳ Pending Donations</h3>
+                  <p class="text-2xl font-bold text-[var(--gold)]">${pendingDonations}</p>
+                  ${pendingDonations > 0 ? `<button onclick="viewPendingDonations()" class="btn-primary text-sm py-1 mt-2">Review</button>` : ''}
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6">
+                <button onclick="navigate('register')" class="card-modern text-center hover:border-[var(--primary)]/30">📝 View Members</button>
+                <button onclick="showAddProject()" class="card-modern text-center hover:border-[var(--primary)]/30">🚀 Add Project</button>
+                <button onclick="showAddNews()" class="card-modern text-center hover:border-[var(--primary)]/30">📰 Publish News</button>
+                <button onclick="showAddGallery()" class="card-modern text-center hover:border-[var(--primary)]/30">🖼️ Add Gallery</button>
+              </div>
+            </div>
+          `;
+        }
+
+        function viewPendingBusiness() {
+            const pending = state.businesses.filter(b => !b.approved);
+            if (pending.length === 0) { showToast('No pending businesses.'); return; }
+            pending.forEach(b => {
+                if (confirm(`Approve business: ${b.name} (Owner: ${b.owner})?\nCategory: ${b.category}\nDescription: ${b.description}`)) {
+                    b.approved = true;
+                    localStorage.setItem('gemiyoBusinesses', JSON.stringify(state.businesses));
+                    showToast(`✅ Business "${b.name}" approved.`);
+                }
+            });
+            renderPage('admin');
+        }
+
+        function viewPendingVolunteers() {
+            const pending = state.volunteers.filter(v => !v.approved);
+            if (pending.length === 0) { showToast('No pending volunteers.'); return; }
+            pending.forEach(v => {
+                if (confirm(`Approve volunteer: ${v.name} (Profession: ${v.profession})?\nSkills: ${v.skills}\nBio: ${v.bio}`)) {
+                    v.approved = true;
+                    localStorage.setItem('gemiyoVolunteers', JSON.stringify(state.volunteers));
+                    showToast(`✅ Volunteer "${v.name}" approved.`);
+                }
+            });
+            renderPage('admin');
+        }
+
+        function viewPendingDonations() {
+            const pending = state.donations.filter(d => d.status === 'pending');
+            if (pending.length === 0) { showToast('No pending donations.'); return; }
+            pending.forEach(d => {
+                const action = prompt(
+                    `Donation from ${d.name} (${d.amount} ${d.currency}) for ${d.project}\nReference: ${d.reference}\nUpdate status to: (verified/completed/pending)`, 'verified');
+                if (action && ['verified', 'completed', 'pending'].includes(action)) {
+                    d.status = action;
+                    localStorage.setItem('gemiyoDonations', JSON.stringify(state.donations));
+                    if (action === 'verified' || action === 'completed') {
+                        const project = state.projects.find(p => p.title === d.project);
+                        if (project) {
+                            project.raised = (project.raised || 0) + d.amount;
+                            project.progress = Math.min(100, Math.round((project.raised / project.budget) * 100));
+                            if (project.progress >= 100) project.status = 'completed';
+                            localStorage.setItem('gemiyoProjects', JSON.stringify(state.projects));
+                        }
+                    }
+                    showToast(`✅ Donation ${d.reference} status updated to ${action}.`);
+                }
+            });
+            renderPage('admin');
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('adminPass').value;
+            if (pass === 'Gbb@2026!') {
+                state.isAdmin = true;
+                showToast('🔓 Welcome, Admin!');
+                renderPage('admin');
+            } else {
+                showToast('❌ Incorrect password.');
+            }
+        }
+
+        // ============================================================
+        // ANALYTICS (same)
+        // ============================================================
+        function renderAnalytics() {
+            const totalMembers = state.members.length;
+            const totalProjects = state.projects.length;
+            const totalDonations = state.donations.length;
+            const totalRaised = state.donations.filter(d => d.status === 'verified' || d.status === 'completed')
+                .reduce((s, d) => s + d.amount, 0);
+            const totalNews = state.news.length;
+            const totalForum = state.forumPosts.length;
+            const totalBusiness = state.businesses.length;
+            const totalVolunteers = state.volunteers.length;
+
+            const statusCounts = { planned: 0, ongoing: 0, completed: 0 };
+            state.projects.forEach(p => { statusCounts[p.status] = (statusCounts[p.status] || 0) + 1; });
+
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const monthlyData = months.map(() => Math.floor(Math.random() * 100000) + 20000);
+
+            return `
+            <div class="animate-slide-up">
+              <h1 class="text-3xl font-extrabold mb-6">📊 Analytics Dashboard</h1>
+
+              <div class="admin-stats-grid">
+                <div class="admin-stat-card"><div class="icon-wrap green">👥</div><div class="stat-number text-2xl">${totalMembers}</div><div class="text-sm text-[var(--text-light)]">Members</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap gold">🚀</div><div class="stat-number text-2xl">${totalProjects}</div><div class="text-sm text-[var(--text-light)]">Projects</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap blue">❤️</div><div class="stat-number text-2xl">${totalDonations}</div><div class="text-sm text-[var(--text-light)]">Donations</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap purple">💰</div><div class="stat-number text-2xl">${formatCurrency(totalRaised)}</div><div class="text-sm text-[var(--text-light)]">Raised</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap green">📰</div><div class="stat-number text-2xl">${totalNews}</div><div class="text-sm text-[var(--text-light)]">News</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap gold">💬</div><div class="stat-number text-2xl">${totalForum}</div><div class="text-sm text-[var(--text-light)]">Forum</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap blue">🏢</div><div class="stat-number text-2xl">${totalBusiness}</div><div class="text-sm text-[var(--text-light)]">Businesses</div></div>
+                <div class="admin-stat-card"><div class="icon-wrap purple">🤝</div><div class="stat-number text-2xl">${totalVolunteers}</div><div class="text-sm text-[var(--text-light)]">Volunteers</div></div>
+              </div>
+
+              <div class="card-modern mt-6">
+                <h3 class="font-bold text-lg mb-4">📈 Monthly Donations (ETB)</h3>
+                <div class="chart-bar">
+                  ${months.map((m, i) => `
+                    <div class="flex flex-col items-center flex-1">
+                      <div class="bar gold" style="height: ${Math.max(8, (monthlyData[i] / Math.max(...monthlyData)) * 100)}%; width:100%;"></div>
+                      <div class="bar-label">${m}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div class="card-modern">
+                  <h3 class="font-bold text-lg mb-4">📊 Project Status</h3>
+                  <div class="flex items-center gap-6 flex-wrap">
+                    <div class="pie-chart"></div>
+                    <div class="space-y-2">
+                      <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[var(--primary)]"></span> Planned: ${statusCounts.planned || 0}</div>
+                      <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[var(--gold)]"></span> Ongoing: ${statusCounts.ongoing || 0}</div>
+                      <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#3b82f6]"></span> Completed: ${statusCounts.completed || 0}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-modern">
+                  <h3 class="font-bold text-lg mb-4">🏆 Top Projects by Funds</h3>
+                  <div class="space-y-2">
+                    ${state.projects.slice().sort((a, b) => b.raised - a.raised).slice(0, 5).map(p => `
+                      <div class="flex items-center justify-between text-sm">
+                        <span class="truncate max-w-[120px]">${p.title}</span>
+                        <span class="font-medium">${formatCurrency(p.raised)}</span>
+                        <span class="text-xs text-[var(--text-light)]/60">${p.progress}%</span>
+                      </div>
+                    `).join('')}
+                    ${state.projects.length === 0 ? '<p class="text-[var(--text-light)] text-sm">No projects.</p>' : ''}
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-modern mt-6">
+                <h3 class="font-bold text-lg mb-4">🔄 Recent Activity</h3>
+                <div class="space-y-2 max-h-48 overflow-y-auto">
+                  ${state.donations.slice().reverse().slice(0, 5).map(d => `
+                    <div class="flex items-center gap-3 text-sm py-1 border-b border-[var(--text-light)]/5">
+                      <span>❤️</span>
+                      <span class="font-medium">${d.name}</span>
+                      <span class="text-[var(--text-light)]">donated</span>
+                      <span class="font-medium">${formatCurrency(d.amount, d.currency)}</span>
+                      <span class="text-[var(--text-light)]/60 text-xs">${formatDate(d.createdAt)}</span>
+                    </div>
+                  `).join('')}
+                  ${state.donations.length === 0 ? '<p class="text-[var(--text-light)] text-sm">No recent activity.</p>' : ''}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        function init() {
+            if (state.darkMode) {
+                document.documentElement.classList.add('dark');
+            }
+            updateDarkModeUI();
+
+            // Set language button active
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                if (btn.textContent.toLowerCase() === state.language) {
+                    btn.classList.add('active');
+                }
+            });
+
+            window._dirSearch = '';
+            window._galleryFilter = '';
+            window._forumSearch = '';
+            window._bizSearch = '';
+            window._bizCategory = '';
+            window._volSearch = '';
+            window._volCategory = '';
+
+            renderPage('home');
+
+            window.addEventListener('hashchange', () => {
+                const page = window.location.hash.replace('#', '') || 'home';
+                navigate(page);
+            });
+
+            const hash = window.location.hash.replace('#', '');
+            if (hash && ['home', 'about', 'register', 'directory', 'business', 'volunteer', 'projects', 'donations',
+                    'transparency', 'news', 'gallery', 'forum', 'contact', 'admin', 'analytics'
+                ].includes(hash)) {
+                navigate(hash);
+            }
+
+            console.log('🇪🇹 G.B.B. – Together We Build Our Home, Wherever We Live.');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
